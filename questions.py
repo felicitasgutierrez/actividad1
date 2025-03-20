@@ -18,7 +18,10 @@ answers = [
 # Índice de la respuesta correcta para cada pregunta, el el mismo orden que las preguntas
 correct_answers_index = [1, 2, 0, 3, 1]
 # Combinar en una lista de tuplas
-questions_to_ask = random.choices(list(zip(questions, answers, correct_answers_index)), k=3)
+questions_ask =list(zip(questions, answers, correct_answers_index))
+# Seleccionar 3 preguntas aleatorias sin repetición
+questions_to_ask = random.sample(questions_ask, k=3)
+
 #Inicializar el puntaje
 puntaje=0
 # El usuario deberá contestar 3 preguntas
