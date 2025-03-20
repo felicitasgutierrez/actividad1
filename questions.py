@@ -30,25 +30,24 @@ for _ in range(3):
 # El usuario tiene 2 intentos para respondercorrectamente
     errores=0
     for intento in range(2):
-        try:
-            user_answer = input ("Respuesta: ")
-            #Verificar si la entrada es un numero
-            user_answer = int(user_answer)-1
-            #Verificar si la respuesta se encuentra dentro del rango posible
-            if user_answer < 0 or user_answer >= len(answers[question_index]):
+        user_answer = input ("Respuesta: ")
+        if user_answer.isdigit():  # Verificar si es un número
+            user_answer = int(user_answer) - 1  # Convertir a índice base 0
+            if 0 <= user_answer < len(answers[question_index]):  # Verificar rango
+                # Se verifica si la respuesta es correcta
+                if user_answer == correct_answers_index[question_index]:
+                    print("¡Correcto!")
+                    puntaje += 1  # Sumar 1 punto por acierto
+                    break
+                else:
+                    print("Incorrecto. Intenta de nuevo.")
+                    errores += 1
+            else:
                 print("Respuesta no válida")
                 sys.exit(1)
-        except ValueError: 
+        else:
             print("Respuesta no válida")
             sys.exit(1)
-# Se verifica si la respuesta es correcta
-        if user_answer == correct_answers_index[question_index]:
-            print("¡Correcto!")
-            puntaje+=1
-            break
-        else:
-            print("Incorrecto. Intenta de nuevo.")
-            errores+=1
     else:
         # Si el usuario no responde correctamente después de 2 intentos,
         # se muestra la respuesta correcta
