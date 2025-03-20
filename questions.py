@@ -17,15 +17,15 @@ answers = [
     ("=", "==", "!=", "==="),]
 # Índice de la respuesta correcta para cada pregunta, el el mismo orden que las preguntas
 correct_answers_index = [1, 2, 0, 3, 1]
+# Combinar en una lista de tuplas
+questions_to_ask = random.choices(list(zip(questions, answers, correct_answers_index)), k=3)
 #Inicializar el puntaje
 puntaje=0
 # El usuario deberá contestar 3 preguntas
-for _ in range(3): 
-# Se selecciona una pregunta aleatoria
-    question_index = random.randint(0, len(questions) - 1)
-# Se muestra la pregunta y las respuestas posibles
-    print(questions[question_index])
-    for i, answer in enumerate(answers[question_index]):
+for question, answer_options, correct_index in questions_to_ask:
+    # Se muestra la pregunta y las respuestas posibles
+    print(question)
+    for i, answer in enumerate(answer_options):
         print(f"{i + 1}. {answer}")
 # El usuario tiene 2 intentos para respondercorrectamente
     errores=0
@@ -33,9 +33,9 @@ for _ in range(3):
         user_answer = input ("Respuesta: ")
         if user_answer.isdigit():  # Verificar si es un número
             user_answer = int(user_answer) - 1  # Convertir a índice base 0
-            if 0 <= user_answer < len(answers[question_index]):  # Verificar rango
+            if 0 <= user_answer < len(answer_options): # Verificar rango
                 # Se verifica si la respuesta es correcta
-                if user_answer == correct_answers_index[question_index]:
+                if user_answer == correct_index:
                     print("¡Correcto!")
                     puntaje += 1  # Sumar 1 punto por acierto
                     break
@@ -52,7 +52,7 @@ for _ in range(3):
         # Si el usuario no responde correctamente después de 2 intentos,
         # se muestra la respuesta correcta
         print("Incorrecto. La respuesta correcta es:")
-        print(answers[question_index] [correct_answers_index[question_index]])
+        print(answer_options[correct_index])
     puntaje= puntaje - (0.5*errores)
     # Se imprime un blanco al final de la pregunta
     print()
